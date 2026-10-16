@@ -2,17 +2,22 @@
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/utils';
 
 interface Props {
   title: string;
   description: string;
+  lang?: Lang;
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = 'en' } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,8 +32,11 @@ const { title, description } = Astro.props;
     />
   </head>
   <body>
+    <a class="skip-link" href="#main">{t(lang, 'skip')}</a>
+    <Header lang={lang} />
     <main id="main">
       <slot />
     </main>
+    <Footer lang={lang} />
   </body>
 </html>

@@ -1,0 +1,69 @@
+---
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+// TODO step 3: link to the same page in the other language.
+const links = [
+  { code: 'en' as const, label: 'EN', href: '/' },
+  { code: 'fr' as const, label: 'FR', href: '/fr/' },
+];
+---
+
+<div class="lang" role="group" aria-label="Language / Langue">
+  {
+    links.map((link, i) => (
+      <>
+        {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+        <a
+          href={link.href}
+          hreflang={link.code}
+          lang={link.code}
+          aria-label={`${link.label} — ${t(lang, `lang.${link.code}`)}`}
+          aria-current={link.code === lang ? 'true' : undefined}
+        >
+          {link.label}
+        </a>
+      </>
+    ))
+  }
+</div>
+
+<style>
+  .lang {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+  }
+
+  .sep {
+    color: var(--text-muted);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap);
+    min-height: var(--tap);
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  a[aria-current='true'] {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+  }
+</style>

@@ -6,12 +6,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Bilal Saidi — Junior developer, C#/.NET and Python"
   description="Junior developer based in Liège. Back-end services, business applications and the tests that keep them reliable."
 >
-  <div class="container">
+  <div class="container hello">
     <h1>Bilal<span class="dot">.</span></h1>
   </div>
 </BaseLayout>
 
 <style>
+  .hello {
+    padding-block: var(--space-8);
+  }
+
+  h1 {
+    font-size: var(--fs-page-title);
+    letter-spacing: var(--ls-title);
+  }
+
   .dot {
     color: var(--accent);
   }

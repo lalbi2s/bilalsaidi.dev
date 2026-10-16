@@ -1,0 +1,214 @@
+---
+import type { Lang, UiKey } from '../i18n/ui';
+import { t } from '../i18n/utils';
+import LangSwitcher from './LangSwitcher.astro';
+import LcpMeter from './LcpMeter.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const links: { key: UiKey; href: string }[] = [
+  { key: 'nav.work', href: '/work' },
+  { key: 'nav.experience', href: '/experience' },
+  { key: 'nav.education', href: '/education' },
+  { key: 'nav.lab', href: '/lab' },
+  { key: 'nav.about', href: '/about' },
+  { key: 'nav.contact', href: '/contact' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const current = (href: string) => (path === href ? 'page' : undefined);
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/">Bilal<span class="dot">.</span></a>
+    <LcpMeter />
+
+    <nav class="nav-desktop" aria-label="Main">
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={current(link.href)}>
+            {t(lang, link.key)}
+          </a>
+        ))
+      }
+    </nav>
+
+    <LangSwitcher lang={lang} />
+
+    <button class="menu-button" type="button" popovertarget="menu">
+      <span class="when-closed">{t(lang, 'nav.menu')}</span>
+      <span class="when-open">{t(lang, 'nav.close')}</span>
+    </button>
+  </div>
+
+  <!-- Opens below the bar, so the language switcher stays visible -->
+  <nav id="menu" class="menu-panel" popover aria-label="Main">
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} aria-current={current(link.href)}>
+              {t(lang, link.key)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    --header-h: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--header-h);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: var(--ls-title);
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--text);
+  }
+
+  .dot {
+    color: var(--accent);
+  }
+
+  /* Pushes everything after the brand and the LCP value to the right */
+  .nav-desktop,
+  .bar > :global(.lang) {
+    margin-left: auto;
+  }
+
+  .nav-desktop {
+    display: none;
+    align-items: center;
+    margin-right: var(--space-2);
+  }
+
+  .nav-desktop a,
+  .menu-panel a {
+    font-family: var(--font-mono);
+    letter-spacing: var(--ls-label);
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  .nav-desktop a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    font-size: var(--fs-label);
+  }
+
+  .nav-desktop a:hover,
+  .menu-panel a:hover,
+  a[aria-current='page'] {
+    color: var(--accent);
+  }
+
+  a[aria-current='page'] {
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+  }
+
+  .menu-button {
+    min-width: var(--tap);
+    min-height: var(--tap);
+    padding-inline: var(--space-3);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    cursor: pointer;
+  }
+
+  .menu-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .when-open,
+  .site-header:has(.menu-panel:popover-open) .when-closed {
+    display: none;
+  }
+
+  .site-header:has(.menu-panel:popover-open) .when-open {
+    display: inline;
+  }
+
+  /* Full screen under the bar. Nothing is set on `display`, so the browser
+     keeps hiding it while closed. */
+  .menu-panel {
+    position: fixed;
+    inset: var(--header-h) 0 0 0;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    margin: 0;
+    padding: var(--space-4) var(--gutter);
+    border: 0;
+    background: var(--bg);
+    color: var(--text);
+    overflow-y: auto;
+  }
+
+  .menu-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-panel li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    font-size: 1.125rem;
+  }
+
+  @media (min-width: 60rem) {
+    .nav-desktop {
+      display: flex;
+    }
+
+    .bar > :global(.lang) {
+      margin-left: 0;
+    }
+
+    .menu-button,
+    .menu-panel {
+      display: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../i18n/ui';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<footer>
+  <div class="container">
+    <p>{t(lang, 'footer')}</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: var(--space-8);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  p {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    color: var(--text-muted);
+  }
+</style>

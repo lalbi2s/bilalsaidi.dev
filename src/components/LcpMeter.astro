@@ -1,0 +1,39 @@
+---
+// Hidden until the browser reports a real Largest Contentful Paint.
+---
+
+<span class="lcp" data-lcp hidden>LCP <span data-lcp-value></span>ms</span>
+
+<style>
+  .lcp {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label-sm);
+    letter-spacing: var(--ls-label);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  const meter = document.querySelector<HTMLElement>('[data-lcp]');
+  const value = document.querySelector<HTMLElement>('[data-lcp-value]');
+  const supported =
+    'PerformanceObserver' in window &&
+    PerformanceObserver.supportedEntryTypes?.includes('largest-contentful-paint');
+
+  if (meter && value && supported) {
+    const observer = new PerformanceObserver((list) => {
+      const last = list.getEntries().at(-1);
+      if (last) {
+        value.textContent = String(Math.round(last.startTime));
+        meter.hidden = false;
+      }
+    });
+    observer.observe({ type: 'largest-contentful-paint', buffered: true });
+
+    // The browser stops updating LCP after the first user input.
+    const stop = () => observer.disconnect();
+    addEventListener('keydown', stop, { once: true });
+    addEventListener('pointerdown', stop, { once: true });
+  }
+</script>
