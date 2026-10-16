@@ -1,0 +1,77 @@
+/* Design tokens. Every colour, size and radius of the site lives here. */
+
+:root {
+  color-scheme: dark;
+
+  /* Base */
+  --bg: #121416;
+  --bg-raised: #15181b;
+  --grid: #22262a;
+  --border: #2c3136;
+  --border-strong: #6b7178;
+  --line: #7e858c;
+  --text: #e9e6df;
+  --text-2: #c9c5bc;
+  --text-muted: #8a9096;
+  --accent: #c9692f;
+  --on-accent: #1a0f07;
+
+  /* Card colours (projects and education) */
+  --card-rust-bg: #c9692f;
+  --card-rust-fg: #1a0f07;
+  --card-sand-bg: #e7ddc8;
+  --card-sand-fg: #2a2418;
+  --card-mist-bg: #9fc9d9;
+  --card-mist-fg: #0f2830;
+  --card-sage-bg: #7cc9a8;
+  --card-sage-fg: #0b2a20;
+  --card-graphite-bg: #3a3f44;
+  --card-graphite-fg: #e9e6df;
+
+  /* Console status */
+  --status-nominal: #7cc9a8;
+  --status-critical: #f07a6a;
+
+  /* Fonts */
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Type scale */
+  --fs-hero: clamp(5rem, 2rem + 14vw, 11rem);
+  --fs-page-title: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  --fs-card-title: 1.3rem;
+  --fs-body: 1rem;
+  --fs-label: 0.75rem;
+  --fs-label-sm: 0.6875rem;
+  --ls-title: -0.03em;
+  --ls-label: 0.08em;
+  --lh-body: 1.6;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Shapes */
+  --radius-pill: 999px;
+  --radius-card: 14px;
+  --radius-sm: 6px;
+
+  /* Layout */
+  --max-width: 1120px;
+  --gutter: 16px;
+  --grid-size: 28px;
+  --tap: 44px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}

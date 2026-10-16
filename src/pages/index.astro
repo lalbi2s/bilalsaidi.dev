@@ -6,7 +6,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   title="Bilal Saidi — Junior developer, C#/.NET and Python"
   description="Junior developer based in Liège. Back-end services, business applications and the tests that keep them reliable."
 >
-  <main>
-    <h1>Bilal.</h1>
-  </main>
+  <div class="container">
+    <h1>Bilal<span class="dot">.</span></h1>
+  </div>
 </BaseLayout>
+
+<style>
+  .dot {
+    color: var(--accent);
+  }
+</style>
